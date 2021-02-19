@@ -1,16 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const moongose = require('mongoose')
-const bodyParser = require('body-parser')
-
-
-const url = 'mongodb+srv://user-igor:<>@clustertest.ga0jq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-const options = { reconnectTries: Number.MAX_VALUE, reconnectInterval: 500, poolSize: 5, useNewUrlParser: true };
+const Users = require('../model/mode');
 
 //
 
 router.get('/', (req,resp)=>{
-    return resp.send({nome: 'Bem vindo'})
+    Users.find({}, (err,data) =>{
+        if(err) return resp.send({error : 'Erro na consulta'})
+        return resp.send(data);
+    });
 })
+
+
+router.post('/create', (req,resp)=>{
+   const body = {email, password} = req.body;
+   
+   if(!email || !password) return resp.send({error: 'Dados insuficientes '});
+
+   Users.findOne({email}, (err,data) =>{
+       if(err) return resp.send({error: 'Erro ao criar usuario'});
+       if(data) return resp.send({error: 'Usuario ja existente'})
+   
+   
+        Users.create(req.body, (err,data) =>{
+            if(err) return resp.send({error: 'Erro ao criar usuario'});
+            
+            return resp.send(data);
+        });
+    });
+
+});
 
 module.exports = router;

@@ -3,6 +3,7 @@ const app = express();
 
 const moongose = require('mongoose')
 const bodyParser = require('body-parser')
+const UserSchema = require('./model/mode.js')
 
 
 const url = 'mongodb+srv://user-igor:icaro100@clustertest.ga0jq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
